@@ -32,6 +32,7 @@ pub struct CoinbasePaymentsRequest {
     pub local_price: LocalPrice,
     pub redirect_url: String,
     pub cancel_url: String,
+    pub checkout_id: String
 }
 
 impl TryFrom<&types::PaymentsAuthorizeRouterData> for CoinbasePaymentsRequest {
@@ -278,6 +279,7 @@ fn get_crypto_specific_payment_data(
     let local_price = get_local_price(item);
     let redirect_url = item.request.get_return_url()?;
     let cancel_url = item.request.get_return_url()?;
+    let checkout_id = item.attempt_id.to_string();
 
     Ok(CoinbasePaymentsRequest {
         name,
@@ -286,6 +288,7 @@ fn get_crypto_specific_payment_data(
         local_price,
         redirect_url,
         cancel_url,
+        checkout_id
     })
 }
 
